@@ -11,11 +11,16 @@ source "$DOTLY_PATH/scripts/core/_main.sh"
 ##?
 docs::parse "$@"
 
+
+
 dotfiles::apply_templating() {
 	sed -i -e "s|XXX_DOTFILES_PATH_XXX|$UNEXPANDED_DOTFILES_PATH|g" "$DOTFILES_PATH/bin/sdot"
 	sed -i -e "s|XXX_DOTFILES_PATH_XXX|$UNEXPANDED_DOTFILES_PATH|g" "$DOTFILES_PATH/shell/bash/.bashrc"
 	sed -i -e "s|XXX_DOTFILES_PATH_XXX|$UNEXPANDED_DOTFILES_PATH|g" "$DOTFILES_PATH/shell/zsh/.zshenv"
 }
+
+
+
 
 if [ ! -d "$DOTFILES_PATH/shell" ]; then
 	cp -r "$DOTLY_PATH/dotfiles_template/"* "$DOTFILES_PATH/"

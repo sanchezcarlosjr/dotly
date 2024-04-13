@@ -7,6 +7,7 @@ set -euo pipefail
 ##? Usage:
 ##?    installer
 
+git config --global protocol.file.allow always
 DOTLY_REPOSITORY=${DOTLY_REPOSITORY:-CodelyTV/dotly}
 DOTLY_BRANCH=${DOTLY_BRANCH:-main}
 DOTLY_LOG_FILE=${DOTLY_LOG_FILE:-$HOME/dotly.log}
@@ -71,6 +72,7 @@ UNEXPANDED_DOTFILES_PATH="${DOTFILES_PATH:-\$HOME/.dotfiles}"
 DOTFILES_PATH="$(eval echo "$UNEXPANDED_DOTFILES_PATH")"
 export DOTFILES_PATH="$DOTFILES_PATH"
 export UNEXPANDED_DOTFILES_PATH="$UNEXPANDED_DOTFILES_PATH"
+
 
 dotly_inner_path="modules/dotly"
 export DOTLY_PATH="$DOTFILES_PATH/$dotly_inner_path"
@@ -144,14 +146,21 @@ _a "Initializing your dotfiles git repository"
 git init 2>&1 | _log "Initializing repository"
 
 _a "Cloning dotly"
-git submodule add -b "$DOTLY_BRANCH" "https://github.com/$DOTLY_REPOSITORY.git" "$dotly_inner_path" 2>&1 | _log "Adding dotly submodule"
+DOTLY_URL="/workspace/dotly"
+#DOTLY_URL="https://github.com/$DOTLY_REPOSITORY.git"
+#git submodule add -b "$DOTLY_BRANCH" $DOTLY_URL "$dotly_inner_path" 2>&1 | _log "Adding dotly submodule"
+
+git submodule add -b "$DOTLY_BRANCH" $DOTLY_URL "$dotly_inner_path" 2>&1 | _log "Adding dotly submodule"
 
 _a "Installing dotly dependencies"
 git submodule update --init --recursive 2>&1 | _log "Installing dotly dependencies"
 
+
 cd "$DOTLY_PATH"
 
 "$PWD/bin/dot" self install
+
+
 
 _a "🎉 dotly installed correctly! 🎉"
 _a "Please, restart your terminal to see the changes"
