@@ -160,7 +160,7 @@ cd "$DOTLY_PATH"
 
 "$PWD/bin/dot" self install
 
-ls $DOTLY_PATH
+ls $DOTLY_PATH | grep "abc" || exit 1
 
 
 
