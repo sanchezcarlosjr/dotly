@@ -150,7 +150,7 @@ DOTLY_URL="/workspace/dotly"
 #DOTLY_URL="https://github.com/$DOTLY_REPOSITORY.git"
 #git submodule add -b "$DOTLY_BRANCH" $DOTLY_URL "$dotly_inner_path" 2>&1 | _log "Adding dotly submodule"
 
-git submodule add -b "$DOTLY_BRANCH" $DOTLY_URL "$dotly_inner_path" 2>&1 | _log "Adding dotly submodule"
+git submodule add -b main $DOTLY_URL "$dotly_inner_path" 2>&1 | _log "Adding dotly submodule"
 
 _a "Installing dotly dependencies"
 git submodule update --init --recursive 2>&1 | _log "Installing dotly dependencies"
@@ -159,6 +159,8 @@ git submodule update --init --recursive 2>&1 | _log "Installing dotly dependenci
 cd "$DOTLY_PATH"
 
 "$PWD/bin/dot" self install
+
+ls $DOTLY_PATH
 
 
 
